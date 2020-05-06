@@ -21,7 +21,7 @@ class Home extends CI_Controller
           $this->load->view('form/insert_form');
       }
 
-     
+
 
   public function insert_new()
       {
@@ -61,8 +61,8 @@ class Home extends CI_Controller
           $data['user_data'] = $this->User_Model->fetch_data($id);
           $data['users'] = $this->User_Model->fetch_all();
           $this->load->view('form/update_form', $data);
-      
-      }  
+
+      }
 
   public function update()
     {
@@ -85,7 +85,7 @@ class Home extends CI_Controller
                 {
                     $data['user_data'] = $this->User_Model->fetch_data($id);
                   $this->load->view('form/update_form', $data);
-                  
+
                 }
 
       }
@@ -101,7 +101,7 @@ class Home extends CI_Controller
          $id = $this->uri->segment(3);
          $this->User_Model->delete_data($id);
          redirect(base_url() . '/home/delete_msg');
-      }  
+      }
 
       public function delete_msg()
       {
@@ -123,31 +123,31 @@ class Home extends CI_Controller
             $this->load->library('form_validation');
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('pass', 'Password', 'required');
-        
+
             if ($this->form_validation->run() == TRUE)
                {
-                  
+
                  if($this->User_Model->log_in($uemail, $upass))
                     {
-                        $session_data = array('uemail' => $uemail);  
-                       
+                        $session_data = array('uemail' => $uemail);
+
                         $this->session->set_userdata($session_data);
-                        redirect(base_url(). 'home/dashboard');          
+                        redirect(base_url(). 'home/dashboard');
                     }
                  else
                     {
                         $this->session->set_flashdata('error', 'Email or password is incorrect');
                         redirect(base_url(). 'home/login');
 
-                    }  
+                    }
                 }
           else
               {
                  $this->login();
               }
- 
+
          }
-       
+
       public function dashboard()
           {
               if($this->session->userdata('uemail') != '')
@@ -155,17 +155,45 @@ class Home extends CI_Controller
                         echo "<h1 style = 'color: green;'>Welcome ".$this->session->userdata('uemail')."</h1>";
                         echo '<label><a href = "'.base_url().'home/logout">Logout</a></label>';
                  }
-            else 
+            else
                 {
                   redirect(base_url(). 'home/login');
-                }   
-          }  
-          
+                }
+          }
+
           public function logout()
           {
               $this->session->unset_userdata('uemail');
               redirect(base_url(). 'home/login');
 
           }
+
+        public function upload_image()
+          {
+              $data['title'] = 'Image File Upload';
+              $this->load-> view('include/header');
+              $this->load->view('page/image_form', $data);
+          }
+
+       public function ajax_upload()
+       {
+
+         if(isset($_FILES["image_file"]["name"]))
+           {
+                $config['upload_path'] = './uploads/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $this->load->library('upload', $config);
+                if(!$this->upload->do_upload('image_file'))
+                {
+                     echo $this->upload->display_errors();
+                }
+                else
+                {
+                     $data = $this->upload->data();
+                     echo '<img src="'.base_url().'uploads/'.$data["file_name"].'" width="400" height="400" />';
+                }
+          }
+
+      }
 
   }

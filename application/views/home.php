@@ -38,7 +38,7 @@
 
 </div>
 
-   <div class="container" style="padding-top: 250px;">
+   <div class="container" style="padding-top: 150px;">
 
     <!-- !st row   -->
    	   <div class="row">
@@ -76,10 +76,24 @@
        
        </div>
 
+
+           <!-- !st row   -->
+           <div class="row">
+   	   	   <div class="col">
+              <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+              <div class="card-header">Upload </div>
+              <div class="card-body">
+                   <h4 class="card-title"><a href="<?php echo base_url(); ?>home/upload_image"  
+                       style="color: white;"> Image  </a></h4>
+           </div>
+           </div>
+   	   	</div>
+   	  </div>
+
  </div>
 
 
- <div style="padding-top: 211px;">
+ <div style="padding-top: 150px;">
      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
          <a class="navbar-brand" href="#">CYBESTURE PVT. LTD.</a>
      </nav>
